@@ -1,0 +1,16 @@
+- host: localhost
+  tasks:
+    - get_url: 
+        url: http://trunk.rdoproject.org/f21/current/delorean.repo
+        dest: /etc/yum.repos.d/delorean.repo
+
+    - dnf:
+        name: "{{item}}"
+      with_items:
+        - openstack-neutron
+          openstack-neutron-ml2
+          openstack-neutron-openvswitch
+
+    - service:
+        name: "{{item}}"
+        enabled: true
