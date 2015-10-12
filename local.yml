@@ -9,8 +9,8 @@
         state: latest
       with_items:
         - openstack-neutron
-          openstack-neutron-ml2
-          openstack-neutron-openvswitch
+        - openstack-neutron-ml2
+        - openstack-neutron-openvswitch
 
     - service:
         name: "{{item}}"
