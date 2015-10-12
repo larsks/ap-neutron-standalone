@@ -1,4 +1,4 @@
-- host: 127.0.0.1
+- hosts: localhost
   tasks:
     - get_url: 
         url: http://trunk.rdoproject.org/f21/current/delorean.repo
