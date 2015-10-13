@@ -12,9 +12,7 @@
         - openstack-neutron-ml2
         - openstack-neutron-openvswitch
 
-    - service:
-        name: "{{item}}"
-        enabled: true
+    - command: systemctl enable {{item}}
       with_items:
         - neutron-server
         - neutron-dhcp-agent
