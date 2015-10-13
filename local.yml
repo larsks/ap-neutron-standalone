@@ -9,7 +9,8 @@
         dest: /etc/yum.repos.d/delorean.repo
 
     - name: install packages
-      dnf:
+      action: "{{packager}}"
+      args:
         name: "{{item}}"
         state: latest
       with_items:
