@@ -15,3 +15,9 @@
     - service:
         name: "{{item}}"
         enabled: true
+      with_items:
+        - neutron-server
+        - neutron-dhcp-agent
+        - neutron-l3-agent
+        - neutron-openvswitch-agent
+        - neutron-lbaas-agent
