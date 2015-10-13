@@ -74,3 +74,9 @@
           value: vxlan
         - option: mechanism_drivers
           value: openvswitch
+
+    - name: symlink plugin configuration
+      file:
+        state: link
+        src: /etc/neutron/plugins/ml2/ml2_conf.ini
+        dest: /etc/neutron/plugin.ini
