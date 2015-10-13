@@ -1,2 +1,3 @@
-delorean_repo_url: https://trunk.rdoproject.org/f22/current/delorean.repo
+delorean_repo_urls:
+  - https://trunk.rdoproject.org/f22/current/delorean.repo
 packager: dnf

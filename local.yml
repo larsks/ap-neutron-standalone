@@ -5,8 +5,9 @@
   tasks:
     - name: configure delorean repository
       get_url: 
-        url: "{{delorean_repo_url}}"
-        dest: /etc/yum.repos.d/delorean.repo
+        url: "{{item}}"
+        dest: /etc/yum.repos.d/
+      with_items: delorean_repo_urls
 
     - name: install packages
       action: "{{packager}}"
