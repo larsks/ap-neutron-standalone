@@ -51,16 +51,6 @@
         - option: rabbit_host
           value: localhost
 
-    - name: configure neutron database
-      ini_file:
-        dest: /etc/neutron/neutron.conf
-        section: database
-        option: "{{item.option}}"
-        value: "{{item.value}}"
-      with_items:
-        - option: connection
-          value: sqlite:////var/lib/neutron/neutron.db
-
     - name: configure neutron ml2
       ini_file:
         dest: /etc/neutron/plugins/ml2/ml2_conf.ini
