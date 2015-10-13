@@ -1,0 +1,8 @@
+- hosts: localhost
+  vars:
+    packager: dnf
+  tasks:
+    - action: "{{packager}}"
+      args:
+        name: git
+        state: latest
