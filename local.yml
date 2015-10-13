@@ -1,10 +1,12 @@
 - hosts: localhost
   tasks:
-    - get_url: 
+    - name: configure delorean repository
+      get_url: 
         url: http://trunk.rdoproject.org/f21/current/delorean.repo
         dest: /etc/yum.repos.d/delorean.repo
 
-    - dnf:
+    - name: install packages
+      dnf:
         name: "{{item}}"
         state: latest
       with_items:
@@ -12,10 +14,54 @@
         - openstack-neutron-ml2
         - openstack-neutron-openvswitch
 
-    - command: systemctl enable {{item}}
+    - name: enable services
+      command: systemctl enable {{item}}
       with_items:
+        - openvswitch
         - neutron-server
         - neutron-dhcp-agent
         - neutron-l3-agent
         - neutron-openvswitch-agent
         - neutron-lbaas-agent
+
+    - name: configure neutron DEFAULT
+      ini_file:
+        dest: /etc/neutron/neutron.conf
+        section: DEFAULT
+        option: {{item.option}}
+        value: {{item.value}}
+      with_items:
+        - option: verbose
+          value: True
+        - option: core_plugin
+          value: ml2
+        - option: service_plugins
+          value: router,lbaas
+        - option: auth_strategy
+          value: noauth
+        - option: rabbit_host
+          value: localhost
+
+    - name: configure neutron database
+      ini_file:
+        dest: /etc/neutron/neutron.conf
+        section: database
+        option: {{item.option}}
+        value: {{item.value}}
+      with_items:
+        - option: connection
+          value: sqlite:////var/lib/neutron/neutron.db
+
+    - name: configure neutron ml2
+      ini_file:
+        dest: /etc/neutron/plugins/ml2/ml2_conf.ini
+        section: ml2
+        option: {{item.option}}
+        value: {{item.value}}
+      with_items:
+        - option: type_drivers
+          value: flat,vxlan
+        - option: tenant_network_types
+          value: vxlan
+        - option: mechanism_drivers
+          value: openvswitch
